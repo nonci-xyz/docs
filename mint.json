@@ -20,7 +20,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "pages": ["introduction", "quickstart", "usage"]
     },
     {
       "group": "Essentials",

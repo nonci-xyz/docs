@@ -1,6 +1,90 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in under 5 minutes"
+description: "Set up your Nonci instance in under 5 minutes"
 ---
 
-## Prerequisites
+### Prerequisites
+
+- MongoDB instance, you can create a free on on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- RabbitMQ instance, you can create a free one on [CloudAMQP](https://www.cloudamqp.com/)
+- Node.js 16 or higher
+
+### Setup
+
+Firstly, clone the repository by running the following command -
+
+```bash
+git clone https://github.com/nonci-xyz/api.git
+```
+
+Now, install the dependencies -
+
+<CodeGroup>
+
+```bash npm
+npm i
+```
+
+```bash yarn
+yarn
+```
+
+```bash pnpm
+pnpm i
+```
+
+</CodeGroup>
+
+Now run the `setup.sh` script -
+
+```
+./setup.sh
+```
+
+This will create an API secret and a keypair for the Nonci vault and populate a default `.env` file where you can add the MongoDB and RabbitMQ connection strings as well as make other changes like changing the RPC url.
+
+The public key of your vault will be present in the `.env` file. Make sure to fund it with some SOL on the network you want to use in order to pay gas fees and rent for the Nonce accounts.
+
+Now, you can run the API server by running the following command -
+
+<CodeGroup>
+
+```bash npm
+npm run start
+```
+
+```bash yarn
+yarn start
+```
+
+```bash pnpm
+pnpm start
+```
+
+</CodeGroup>
+
+You can also run the API server in development mode by running the following command -
+
+<CodeGroup>
+
+```bash npm
+npm run dev
+```
+
+```bash yarn
+yarn dev
+```
+
+```bash pnpm
+pnpm dev
+```
+
+</CodeGroup>
+
+Note that the API server also runs the worker process which listens for new transactions and processes them.
+
+## Next steps
+
+<Card title="Usage" icon="list" href="/usage">
+  Use the Nonci API or SDK in your project to queue transactions
+</Card>

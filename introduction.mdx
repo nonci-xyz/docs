@@ -6,6 +6,14 @@ Nonci is a simple, yet powerful tool for queuing transactions and executing them
 
 Ideally it is meant for NFTs but the infrastructure is generic enough to be used for any type of transaction.
 
+## Features
+
+- Queue transactions and execute them asynchronously using durable nonces
+- Easy-to-use APIs and SDKs to get transaction execution status
+- Close nonce accounts after use to retrieve the rent back
+
+Nonce accounts need some rent when they are created (~14 SOL for 10,000 nonce accounts i.e. 10,000 transactions) but this rent can be claimed back once the transaction is used (i.e. the transaction is processed). This does not include gas fees (~0.1 SOL for creating and closing 10,000 nonce accounts).
+
 <Card title="Quickstart" icon="circle-play" href="/quickstart">
   Get started with hosting your own Nonci instance in just a few minutes.
 </Card>
