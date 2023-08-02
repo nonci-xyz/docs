@@ -1,0 +1,230 @@
+---
+title: "Get Nonce"
+description: "Get details about a nonce account"
+---
+
+You can request details about nonces in a few different ways:
+
+- All - returns all nonces
+- Used - returns nonces already used for a processed/pending transaction
+- Active - returns nonces that have not been used yet
+- By Id - query by the nonce id
+- By Public Key - query by the public key of the nonce account
+- By Value - query by the nonce value
+
+<RequestExample>
+
+```bash API
+# All Nonces
+curl -X GET "https://yournonciinstance.com/nonce"
+
+# All active nonces (have not been used yet)
+curl -X GET "https://yournonciinstance.com/nonce?status=active"
+
+# All used nonces
+curl -X GET "https://yournonciinstance.com/nonce?status=used"
+
+# By id
+curl -X GET "https://yournonciinstance.com/nonce?id=<nonce_id>"
+
+# By public key of nonce account
+curl -X GET "https://yournonciinstance.com/nonce?public_key=<public_key>"
+
+# By nonce value
+curl -X GET "https://yournonciinstance.com/nonce?value=<nonce_value>"
+```
+
+```ts SDK
+const allNonces = await nonci.getAllNonces();
+const activeNonces = await nonci.getActiveNonces();
+const getUsedNonces = await nonci.getUsedNonces();
+
+const nonceById = await nonci.getNonceById("<nonce_id>");
+const nonceByPublicKey = await nonci.getNonceByPublicKey("<public_key>");
+const nonceByValue = await nonci.getNonceByValue("<nonce_value>");
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json All Nonces
+{
+    "message": "Fetched all nonces",
+    "nonces": [
+        {
+            "id": "64ba9506331ae833f93225be",
+            "isActive": false,
+            "createdAt": "2023-07-21T14:24:06.356Z",
+            "updatedAt": "2023-07-22T10:01:58.308Z",
+            "createTxSig": "ZtnoPgcUkH7Ae3Auvc5xERwvmybxorKvVpmhUEMdTeXa7zgsrAaDDPVCJqWZtQBBGiYHrxN1xkDRLW8E1vx6p3Z",
+            "deleteTxSig": "2Hrgx64QLocZQtFBwxEtfrsz4T4zs5w6bKCaZDg4g4rY6Xyw1DUyqbYwq6m1aBrhZjnerQSWd1SpJLPR3UDS4CKc",
+            "nonceValue": "7raKtYQfw5cCYJTCcSaG6gQW8n5AwGfeeSwErRCp34us",
+            "Transaction": {
+                "id": "64bc16bdd6f8cb44956a606a",
+                "createdAt": "2023-07-22T17:49:49.580Z",
+                "updatedAt": "2023-07-22T17:49:49.580Z",
+                "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+                "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+                "isProcessed": false,
+                "durableNonceId": "64ba9506331ae833f93225be",
+                "signature": null
+            }
+        },
+        {
+            "id": "64bba8348cfb77809a7fead8",
+            "isActive": true,
+            "createdAt": "2023-07-22T09:58:12.319Z",
+            "updatedAt": "2023-07-22T10:04:49.333Z",
+            "createTxSig": "EXVUcnUudrbDYee9DGtFcmre2f4jfGn7uEbxe1T5foabjrTSfbnygcYz7JQaTtJKhYtRQMus9fcKaKwR4hpqe3o",
+            "deleteTxSig": "5jJK7ovJYm8iyaZSyUpGHNGvsDn58EkxZjJUZ26ACWDwC4H5JN2aBMrB7uXfy6ACzgprqgaZonyeHaisFPyrEMtH",
+            "nonceValue": "8kD1aBW6fKF7ecmcxzXg4QmNwhoPqoneocWJy9uk6zdU",
+            "Transaction": null
+        },
+        {
+            "id": "64bc176fd6f8cb44956a606b",
+            "isActive": false,
+            "createdAt": "2023-07-22T17:52:47.764Z",
+            "updatedAt": "2023-07-22T17:58:27.095Z",
+            "createTxSig": "P6ugqGDAjxA2Joktkgea8jQjFK7cCUF7HJYqaV1N6SBzPgJ6ZdiodJsFEe5tMw2Cwxezi6jKD75SXRz8GezogLR",
+            "deleteTxSig": null,
+            "nonceValue": "FxTqQkwK3V9SwfEUnqj897mhP2jCZnXguSew7Qq44PWo",
+            "Transaction": {
+                "id": "64bc18c200a7e7f47f988ef3",
+                "createdAt": "2023-07-22T17:58:26.313Z",
+                "updatedAt": "2023-07-22T17:58:27.095Z",
+                "signedTx": "AXW/ewrnj3wq0AiDMEHF7xdku9DuEE1h6rgNe39Z4E9/lFxGSR/HEnS1SiFg9CzQOABbrDhi7VkoR75MqRr0ow8BAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwdqSRyc18MocMZygVKySoQA2n1MtO5RoHidX8v7mibNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAN4450vljLTbeS1IwDYTx1VHHwd7NYD/61LR3pKhfsZAAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+                "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+                "isProcessed": true,
+                "durableNonceId": "64bc176fd6f8cb44956a606b",
+                "signature": "3zapktzUffG76eEhgxT6K5JX7gyaUeR5sGGEvA5r7DsHnDfLSSnmmZF2dFfLkFp142qaBaMxZSQBho73ZZ8VotxM"
+            }
+        },
+        {
+            "id": "64c7ea4ae5a554771de2a8b1",
+            "isActive": false,
+            "createdAt": "2023-07-31T17:07:22.533Z",
+            "updatedAt": "2023-07-31T17:08:45.874Z",
+            "createTxSig": "5KTFrx2NvBK3PU4c5753kQ2cebMxcWpG1dVxmmNzvr9bjMMFZvf4u1H6bgb91EmcB4iN3ppLTSWiu7ju8adW1FcR",
+            "deleteTxSig": null,
+            "nonceValue": "4okL9LFBhteNZzeuywzmfRNzzs9DvoJxkukH8ygQTRV5",
+            "Transaction": {
+                "id": "64c7ea9ce5a554771de2a8b2",
+                "createdAt": "2023-07-31T17:08:44.616Z",
+                "updatedAt": "2023-07-31T17:08:45.874Z",
+                "signedTx": "AacONf6MoBU9u10Z/vbeW8P+xF6GQS079FlArEOEejwDA8wYYugjDifw9ujOB7g02jzlagjG0o0qAvt0OUhqPggBAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKk6eZF4NZdN3skekKiW8LGR8KjDccYrV5pul8gAWudzO2tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAADiMxX4RYWqEaRLj/bbo0WCEBcsjKC7XUvbnGlt9GA8cAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+                "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+                "isProcessed": true,
+                "durableNonceId": "64c7ea4ae5a554771de2a8b1",
+                "signature": "5vUPgYTDiGK3wH2Uf4YMT81ABacFaKkYrS9qjM3h6dQerRzViLTSNHqPd14PijPCjs2xRfyJF3u1MjCzBCYyWu3c"
+            }
+        },
+       
+    ]
+}
+```
+
+```json Active Nonces
+{
+  "message": "Fetched all active nonces",
+  "nonces": [
+    {
+      "id": "64bba83d8cfb77809a7feadf",
+      "isActive": true,
+      "createdAt": "2023-07-22T09:58:21.223Z",
+      "updatedAt": "2023-07-22T10:04:50.767Z",
+      "createTxSig": "DKbWUKUYLw5rpxxRRf29zFbV3vHPbC1UYewyGAHXJBkPDWBFQFrfCjQPmT3VDNWUDqhCzBfvSysJME8aNnu3fUY",
+      "deleteTxSig": "32wtTGsym12EE7RqZeCeQvvJtGa4SfhDF6YhoK6Yr1bcsykVkT2qdQZS9pJU8WqNwuMaKLQh3b3Ng5JKc5szhhDf",
+      "nonceValue": "Ch9kRSfytq9jnaLk8cCEXW7QNwB3Uwf9MWnw9FeTKBNC",
+      "publicKey": "287VzhU64oRxf6csPTa7gkAVf8C8bYrURgYoMqJEyi8n",
+      "Transaction": null
+    },
+    {
+      "id": "64bba9d18074d6da74292648",
+      "isActive": true,
+      "createdAt": "2023-07-22T10:05:05.752Z",
+      "updatedAt": "2023-07-22T10:05:05.752Z",
+      "createTxSig": "3oozs86VNekm7dHCu2PGUQijo4FAssvHGWykre7ncnFaPECqVNZV1SGEaeRx1Ap3FB9GDYL425fJfhLYTAc55euD",
+      "deleteTxSig": null,
+      "nonceValue": "Fe3BjyC3v2UaXRkXEPVfV2xfyksHWbUGrMhues3Rd9YM",
+      "publicKey": "ALbTJquZs5Ff2ZdiLGEkHtFnhFvgeorUDQMjehC1YRJF",
+      "Transaction": null
+    }
+  ]
+}
+```
+
+```json Used Nonces
+{
+  "message": "Fetched all used nonces",
+  "nonces": [
+    {
+      "id": "64ba9506331ae833f93225be",
+      "isActive": false,
+      "createdAt": "2023-07-21T14:24:06.356Z",
+      "updatedAt": "2023-07-22T10:01:58.308Z",
+      "createTxSig": "ZtnoPgcUkH7Ae3Auvc5xERwvmybxorKvVpmhUEMdTeXa7zgsrAaDDPVCJqWZtQBBGiYHrxN1xkDRLW8E1vx6p3Z",
+      "deleteTxSig": "2Hrgx64QLocZQtFBwxEtfrsz4T4zs5w6bKCaZDg4g4rY6Xyw1DUyqbYwq6m1aBrhZjnerQSWd1SpJLPR3UDS4CKc",
+      "nonceValue": "7raKtYQfw5cCYJTCcSaG6gQW8n5AwGfeeSwErRCp34us",
+      "publicKey": "68AszQdhKh3GBDye1XpSe7yBTUCJkwJxd4efDVqMzRna",
+      "Transaction": {
+        "id": "64bc16bdd6f8cb44956a606a",
+        "createdAt": "2023-07-22T17:49:49.580Z",
+        "updatedAt": "2023-07-22T17:49:49.580Z",
+        "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+        "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+        "isProcessed": false,
+        "durableNonceId": "64ba9506331ae833f93225be",
+        "signature": null
+      }
+    },
+    {
+      "id": "64c7f37c9544612049dad817",
+      "isActive": false,
+      "createdAt": "2023-07-31T17:46:36.526Z",
+      "updatedAt": "2023-07-31T17:47:18.116Z",
+      "createTxSig": "4vncUKv89G5ucE9u6FFugRETaW2cRnipnsQ1eX9Gds3gdDBNLkour7ZeaXGavgSqKTJAmok4Xg4HqzprNXXRwV2v",
+      "deleteTxSig": null,
+      "nonceValue": "GYsMaiW7iB1eN3ocKE78LZunuWXHfecVpiaTEtUwjPcz",
+      "publicKey": "9j3gEbP5HZi93JEBFCVdrcx1NCxKVjkJH65PSPt98MW1",
+      "Transaction": {
+        "id": "64c7f3a49544612049dad818",
+        "createdAt": "2023-07-31T17:47:16.830Z",
+        "updatedAt": "2023-07-31T17:47:18.116Z",
+        "signedTx": "AcJ93mjHyVEYsGC34hACUrVi0qRSF5JgCn4IokASA1INXCyAvWMLUpwLGsYhJ/vvGjjq/Q405WDBLE3Do/MwhwIBAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwYGi6mlC+bcmzYoMbn3ggWQ6OEo1Yg4tQsA53ClYHc3aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAOcJPtGv8jchpTcIG/d9OYD+S8EvaxH39ihxsQj4ijRPAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+        "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+        "isProcessed": true,
+        "durableNonceId": "64c7f37c9544612049dad817",
+        "signature": "554vHSDeSwSxjFdJPmxCsSeFCRbY6uG8tEabLCoLG24njv7ykUwWoS5LUxdwpccqe7TWFHFAe5kPPKW5zDJyGJjo"
+      }
+    }
+  ]
+}
+```
+
+```json Nonce By Id/Public Key/Value
+{
+  "message": "Fetched nonce",
+  "nonce": {
+    "id": "64ba9506331ae833f93225be",
+    "isActive": false,
+    "createdAt": "2023-07-21T14:24:06.356Z",
+    "updatedAt": "2023-07-22T10:01:58.308Z",
+    "createTxSig": "ZtnoPgcUkH7Ae3Auvc5xERwvmybxorKvVpmhUEMdTeXa7zgsrAaDDPVCJqWZtQBBGiYHrxN1xkDRLW8E1vx6p3Z",
+    "deleteTxSig": "2Hrgx64QLocZQtFBwxEtfrsz4T4zs5w6bKCaZDg4g4rY6Xyw1DUyqbYwq6m1aBrhZjnerQSWd1SpJLPR3UDS4CKc",
+    "nonceValue": "7raKtYQfw5cCYJTCcSaG6gQW8n5AwGfeeSwErRCp34us",
+    "publicKey": "68AszQdhKh3GBDye1XpSe7yBTUCJkwJxd4efDVqMzRna",
+    "Transaction": {
+      "id": "64bc16bdd6f8cb44956a606a",
+      "createdAt": "2023-07-22T17:49:49.580Z",
+      "updatedAt": "2023-07-22T17:49:49.580Z",
+      "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+      "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+      "isProcessed": false,
+      "durableNonceId": "64ba9506331ae833f93225be",
+      "signature": null
+    }
+  }
+}
+```
+
+</ResponseExample>

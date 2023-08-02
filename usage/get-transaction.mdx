@@ -1,0 +1,176 @@
+---
+title: "Get Transaction"
+description: "Get details about a transaction"
+---
+
+You can request details about transactions in a few different ways:
+
+- All - Returns all transactions
+- Pending - Returns all pending transactions
+- Processed - Returns all processed transactions
+- By Id - Returns a specific transaction by id
+- By Recpient Address - Returns all transactions for a specific recipient address
+
+<RequestExample>
+```bash API
+# All Transactions 
+curl -X GET "https://yournonciinstance.com/transaction"
+
+# All Pending Transactions
+
+curl -X GET "https://yournonciinstance.com/transaction?status=pending"
+
+# All Processed Transactions
+
+curl -X GET "https://yournonciinstance.com/transaction?status=processed"
+
+# By Id
+
+curl -X GET "https://yournonciinstance.com/transaction?id=<transaction_id>"
+
+# By recipient address
+
+curl -X GET "https://yournonciinstance.com/transaction?recipient=<recipient_address>"
+
+````
+
+```ts SDK
+const allTxs = await nonci.getAllTxs()
+const pendingTxs = await nonci.getPendingTxs()
+const processedTxs = await nonci.getProcessedTxs()
+
+const txById = await nonci.getTxById('<transaction_id>')
+const txsByRecipient = await nonci.getTxsByRecipient('<recipient_address>')
+````
+
+</RequestExample>
+
+<ResponseExample>
+```json All Transactions
+{
+    "message": "Fetched transactions",
+    "transactions": [
+        {
+            "id": "64bc16bdd6f8cb44956a606a",
+            "createdAt": "2023-07-22T17:49:49.580Z",
+            "updatedAt": "2023-07-22T17:49:49.580Z",
+            "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+            "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+            "isProcessed": false,
+            "durableNonceId": "64ba9506331ae833f93225be",
+            "signature": null
+        },
+        {
+            "id": "64bc18c200a7e7f47f988ef3",
+            "createdAt": "2023-07-22T17:58:26.313Z",
+            "updatedAt": "2023-07-22T17:58:27.095Z",
+            "signedTx": "AXW/ewrnj3wq0AiDMEHF7xdku9DuEE1h6rgNe39Z4E9/lFxGSR/HEnS1SiFg9CzQOABbrDhi7VkoR75MqRr0ow8BAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwdqSRyc18MocMZygVKySoQA2n1MtO5RoHidX8v7mibNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAN4450vljLTbeS1IwDYTx1VHHwd7NYD/61LR3pKhfsZAAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+            "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+            "isProcessed": true,
+            "durableNonceId": "64bc176fd6f8cb44956a606b",
+            "signature": "3zapktzUffG76eEhgxT6K5JX7gyaUeR5sGGEvA5r7DsHnDfLSSnmmZF2dFfLkFp142qaBaMxZSQBho73ZZ8VotxM"
+        },
+    ]
+}
+
+```json Processed Transactions
+{
+  "message": "Fetched transactions",
+  "transactions": [
+    {
+      "id": "64bc18c200a7e7f47f988ef3",
+      "createdAt": "2023-07-22T17:58:26.313Z",
+      "updatedAt": "2023-07-22T17:58:27.095Z",
+      "signedTx": "AXW/ewrnj3wq0AiDMEHF7xdku9DuEE1h6rgNe39Z4E9/lFxGSR/HEnS1SiFg9CzQOABbrDhi7VkoR75MqRr0ow8BAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwdqSRyc18MocMZygVKySoQA2n1MtO5RoHidX8v7mibNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAN4450vljLTbeS1IwDYTx1VHHwd7NYD/61LR3pKhfsZAAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+      "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+      "isProcessed": true,
+      "durableNonceId": "64bc176fd6f8cb44956a606b",
+      "signature": "3zapktzUffG76eEhgxT6K5JX7gyaUeR5sGGEvA5r7DsHnDfLSSnmmZF2dFfLkFp142qaBaMxZSQBho73ZZ8VotxM"
+    },
+    {
+      "id": "64c7ea9ce5a554771de2a8b2",
+      "createdAt": "2023-07-31T17:08:44.616Z",
+      "updatedAt": "2023-07-31T17:08:45.874Z",
+      "signedTx": "AacONf6MoBU9u10Z/vbeW8P+xF6GQS079FlArEOEejwDA8wYYugjDifw9ujOB7g02jzlagjG0o0qAvt0OUhqPggBAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKk6eZF4NZdN3skekKiW8LGR8KjDccYrV5pul8gAWudzO2tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAADiMxX4RYWqEaRLj/bbo0WCEBcsjKC7XUvbnGlt9GA8cAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+      "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+      "isProcessed": true,
+      "durableNonceId": "64c7ea4ae5a554771de2a8b1",
+      "signature": "5vUPgYTDiGK3wH2Uf4YMT81ABacFaKkYrS9qjM3h6dQerRzViLTSNHqPd14PijPCjs2xRfyJF3u1MjCzBCYyWu3c"
+    }
+  ]
+}
+```
+
+```json Pending Transactions
+{
+  "message": "Fetched transactions",
+  "transactions": [
+    {
+      "id": "64bc16bdd6f8cb44956a606a",
+      "createdAt": "2023-07-22T17:49:49.580Z",
+      "updatedAt": "2023-07-22T17:49:49.580Z",
+      "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+      "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+      "isProcessed": false,
+      "durableNonceId": "64ba9506331ae833f93225be",
+      "signature": null
+    },
+    {
+      "id": "64c6aa54f996045a49b33594",
+      "createdAt": "2023-07-30T18:22:12.674Z",
+      "updatedAt": "2023-07-30T18:22:12.674Z",
+      "signedTx": "AYzD+koNnPca7/ZRl0LAP7lkZasamiGHSBIqj6cvNY5b0EKagZgyfzbinPh/h+MJLo0nhHhq4r6ln5grimuFNAoBAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwfklOm7cMuYvwPalJoioZ9yeGEI/4pKx1SEyp+tTnuVfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAALdpJA19B7Cw7+c2HFew/VSpZ+PCudb4WGhkKn5iMDnBAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+      "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+      "isProcessed": false,
+      "durableNonceId": "64bba69ac8533330914fa47c",
+      "signature": null
+    }
+  ]
+}
+```
+
+```json By Id
+{
+  "message": "Fetched transaction",
+  "transaction": {
+    "id": "64bc16bdd6f8cb44956a606a",
+    "createdAt": "2023-07-22T17:49:49.580Z",
+    "updatedAt": "2023-07-22T17:49:49.580Z",
+    "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+    "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+    "isProcessed": false,
+    "durableNonceId": "64ba9506331ae833f93225be",
+    "signature": null
+  }
+}
+```
+
+```json For recipient
+{
+  "message": "Fetched transactions",
+  "transactions": [
+    {
+      "id": "64bc16bdd6f8cb44956a606a",
+      "createdAt": "2023-07-22T17:49:49.580Z",
+      "updatedAt": "2023-07-22T17:49:49.580Z",
+      "signedTx": "ASReJJoBFkq+TAWbHGC0u2bBMOQVrQbZqlTZUgn7seK06fFqp7XTaJxPDwBycGSkm3B+KdlVP9zk5k6y+oPUHQABAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlMIKuw5O/aIGdcwf34rM8c74M2rw8rHOqm7JV9XBDc22tU7+6R8cyw3uCOrWlFgAcaTahpkKWuowFUf/UY/0bBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAGXZQz1IJB5ynj8KVufXVdlHiKmCYHGVBznpux2pLfkGAgMDAQQABAQAAAADAgACDAIAAABAQg8AAAAAAA==",
+      "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+      "isProcessed": false,
+      "durableNonceId": "64ba9506331ae833f93225be",
+      "signature": null
+    },
+    {
+      "id": "64bc18c200a7e7f47f988ef3",
+      "createdAt": "2023-07-22T17:58:26.313Z",
+      "updatedAt": "2023-07-22T17:58:27.095Z",
+      "signedTx": "AXW/ewrnj3wq0AiDMEHF7xdku9DuEE1h6rgNe39Z4E9/lFxGSR/HEnS1SiFg9CzQOABbrDhi7VkoR75MqRr0ow8BAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwdqSRyc18MocMZygVKySoQA2n1MtO5RoHidX8v7mibNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAN4450vljLTbeS1IwDYTx1VHHwd7NYD/61LR3pKhfsZAAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+      "recipient": "6N57V6nyF6KEzyTPvL778mVTjtcg2Kn8Pq5dUqgUvFXE",
+      "isProcessed": true,
+      "durableNonceId": "64bc176fd6f8cb44956a606b",
+      "signature": "3zapktzUffG76eEhgxT6K5JX7gyaUeR5sGGEvA5r7DsHnDfLSSnmmZF2dFfLkFp142qaBaMxZSQBho73ZZ8VotxM"
+    }
+  ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,49 @@
+---
+title: "Delete Nonce"
+description: "Delete a nonce"
+---
+
+Used nonce accounts can be deleted once they are used to claim the rent back.
+
+<RequestExample>
+
+```bash API
+curl -X DELETE "https://yournonciinstance.com/nonce/delete/<nonce_id>" \
+-H "Authorization: Bearer <secret>"
+```
+
+```ts SDK
+await nonci.deleteNonceById(<nonce_id>);
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+{
+    "message": "Nonce deleted successfully",
+    "signature": "2kUK4LckoY28CGbubAT8hT7jjEKgkA6p5NqfJJRyHMd43VRpWLSiMhyCFoQrRRWwamWwsZbR6vAUUkRcoWoXxP3B"
+}
+```
+</ResponseExample>
+
+If you want to delete all used nonces at once, you can use the bulk delete endpoint -
+
+<CodeGroup>
+```bash API
+curl -X DELETE "https://yournonciinstance.com/nonce/all-used \
+-H "Authorization: Bearer <secret>"
+```
+
+```ts SDK
+await nonci.deleteUsedNonces();
+```
+
+```json Response
+{
+  "message": "All used nonces deleted successfully",
+  "number": 69
+}
+```
+
+</CodeGroup>

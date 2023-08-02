@@ -1,0 +1,32 @@
+---
+title: "Create Nonce"
+description: "Creating a nonce account"
+---
+
+Creating a nonce is as simple as calling the create nonce endpoint or using the `createNonce()` function when using the SDK.
+
+The nonce id is further used when getting the details about a nonce account or adding a new transaction to the queue.
+
+<RequestExample>
+```bash API
+curl -X POST "https://yournonciinstance.com/nonce/create" \
+-H "Authorization: Bearer <secret>"
+```
+
+```ts SDK
+const nonce = await nonci.createNonce();
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+{
+    "message": "durable nonce created",
+    "id": "64aa8619c41e39a0e8264a75",
+    "signature": "5to3fycwT4K4wPNUZCDaQpeuSW1kJtgwooHtY9ZQZocvoC7VCt9TcfKeGHcNXSkxMLY6ghxkgmSwpmLRriRpsMHT",
+    "nonceValue": "5u3sVWPxKYJ6NdjkyFDn7YsXxuXDYefwS6iyoR4VsrPA",
+    "nonceAccountPublicKey": "EeamuTAn5SHfnhP3vBpYFQF9HYTFFbEdiL7n8yka7DPc"
+}
+```
+</ResponseExample>

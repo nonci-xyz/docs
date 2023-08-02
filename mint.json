@@ -1,55 +1,46 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Nonci",
-  "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
-  },
   "favicon": "/favicon.png",
   "colors": {
     "primary": "#12A7D3",
     "light": "#81D7F7",
     "dark": "#004E7A"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
+
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "usage"]
-    },
-    {
-      "group": "Essentials",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation"
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "introduction",
+        "quickstart",
+        {
+          "group": "Usage",
+          "pages": [
+            "usage/setup",
+            "usage/create-nonce",
+            "usage/get-nonce",
+            "usage/add-transaction",
+            "usage/get-transaction",
+            "usage/delete-nonce"
+          ]
+        }
       ]
     }
   ],
+  "api": {
+    "playground": {
+      "mode": "hide"
+    },
+    "auth": {
+      "method": "bearer",
+      "name": "Authorization"
+    },
+    "baseUrl": "https://yournonciinstance.com/"
+  },
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/AnishDe12020",
+    "github": "https://github.com/nonci"
   },
   "backgroundImage": "/background.png"
 }

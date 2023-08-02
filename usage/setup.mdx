@@ -5,6 +5,23 @@ description: "Using the Nonci API and SDKs"
 
 Once you have setup your Nonci instance, you can start using it via the REST API or the SDK.
 
+To install the SDK, run the following command -
+
+<CodeGroup>
+```bash npm
+npm install nonci
+```
+
+```bash yarn
+yarn add nonci
+```
+
+```bash pnpm
+pnpm add nonci
+```
+
+</CodeGroup>
+
 ## Authentication
 
 In the quickstart, when you ran the setup script, a `.env` file was created with an `SECRET` environment variable. This is your API secret and must be set as the Authorization header when using the REST API. If you are using the SDK, initialize the SDK with the secret.
@@ -12,24 +29,6 @@ In the quickstart, when you ran the setup script, a `.env` file was created with
 ```ts
 const nonci = new Nonci({
   secret: process.env.SECRET,
-  endpoint: "https://yournonciinstance.endpoint",
+  hostUri: "https://yournonciinstance.com",
 });
 ```
-
-## Create Nonce
-
-<CodeGroup>
-```bash API
-
-curl -X GET "http://localhost:4000/nonce/create" \
--H "authorization: $SECRET"
-
-````
-
-```ts SDK
-
-nonci.createNonce();
-
-````
-
-</CodeGroup>

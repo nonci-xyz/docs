@@ -1,0 +1,118 @@
+---
+title: "Add Transaction"
+description: "Add a transaction to the queue"
+---
+
+Before adding a transaction to the queue, it is important to add a `nonceAdvance` instruction to the transaction, and make sure it is the first instruction.
+
+Make sure to set the `feePayer` as well.
+
+The `recentBlockhash` of the transaction must be set to the nonce value of the durable nonce which is going to be used for this transaction.
+
+Lastly, make sure the transaction is partially signed with all other signers.
+
+Example:
+
+```ts
+const nonce = await nonci.createNonce();
+
+const tx = new Transaction().add(
+  SystemProgram.nonceAdvance({
+    authorizedPubkey: new PublicKey(config.vaultPublicKey),
+    noncePubkey: new PublicKey(nonce.publicKey),
+  }),
+  SystemProgram.transfer({
+    fromPubkey: new PublicKey(config.vaultPublicKey),
+    toPubkey: new PublicKey("8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88"),
+    lamports: LAMPORTS_PER_SOL / 1000,
+  })
+);
+
+tx.recentBlockhash = nonce.nonceValue;
+tx.feePayer = new PublicKey(config.vaultPublicKey);
+tx.sign(Keypair.fromSecretKey(bs58.decode(config.vaultPrivateKey)));
+
+const serializedTransaction = Buffer.from(tx.serialize()).toString("base64");
+
+const pendingTx = await nonci.addTxToQueue({
+  serializedTransaction,
+  recipientAddress: "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+  durableNonceId: nonce.id,
+});
+```
+
+    If you want to quickly test out the API, you can request for a random transaction (transfers a very small number of lamports to me :) ) -
+
+
+    <CodeGroup>
+    ```bash API
+    curl -X POST "https://yournonciinstance.com/transaction/random-with-nonce" \
+    -H "Authorization: Bearer <secret>" \
+    --data '{
+    "durableNonceId": "<durablenonce_id>"
+    }'
+    ```
+
+    ```ts SDK
+    const randomTx = await nonci.getRandomTxWithNonce("<durablenonce_id>")
+    ```
+
+    ```json Response
+    {
+    "message": "Transaction created",
+    "serializedTransaction": "AebWc3ZH+6NKHpxo0enJBBulFNkVSOp4WzjMIhM6ist3QjAvlO77JoDEMlikk4W0QAAzM00gJ6+3Hzx7U3NekgUBAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwdUZZgw3Yrl4OtdF7jjI/TLHkXDVscli41XmYbEruYmTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAHqTCGnbzERZz/dhCs7e+EJcRv4xYEURwqWkx6dSvxXCAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA=="
+    }
+    ```
+
+</CodeGroup>
+
+<RequestExample>
+```bash API
+curl -X POST "https://yournonciinstance.com/transaction" \
+-H "Authorization: Bearer <secret>" \
+--data '{
+    "serializedTransaction": "<serialized_transaction>",
+    "recipientAddress": "<recipient_address>",
+    "durableNonceId": "<nonce_id>"
+}'
+```
+
+```ts SDK
+const pendingTx = await nonci.addTxToQueue({
+  serializedTransaction: "<serialized_transaction>",
+  recipientAddress: "<recipient_address>",
+  durableNonceId: "<nonce_id>",
+});
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+{
+    "message": "Transaction created",
+    "unprocessedTransaction": {
+        "id": "64ca07e2a2bcfb20411f5602",
+        "createdAt": "2023-08-02T07:38:09.794Z",
+        "updatedAt": "2023-08-02T07:38:09.794Z",
+        "signedTx": "AebWc3ZH+6NKHpxo0enJBBulFNkVSOp4WzjMIhM6ist3QjAvlO77JoDEMlikk4W0QAAzM00gJ6+3Hzx7U3NekgUBAAIFT7BH5dm5ghe0IcjcMtP/68q8h/zu/N6kf2RtKYRWaKlrVO/ukfHMsN7gjq1pRYAHGk2oaZClrqMBVH/1GP9GwdUZZgw3Yrl4OtdF7jjI/TLHkXDVscli41XmYbEruYmTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGp9UXGSxWjuCKhF9z0peIzwNcMUWyGrNE2AYuqUAAAHqTCGnbzERZz/dhCs7e+EJcRv4xYEURwqWkx6dSvxXCAgMDAgQABAQAAAADAgABDAIAAABAQg8AAAAAAA==",
+        "recipient": "8Dyk53RrtmN3MshQxxWdfTRco9sQJzUHSqkUg8chbe88",
+        "isProcessed": false,
+        "durableNonceId": "64ca073f4a6c64446b94d793",
+        "signature": null,
+        "durableNonce": {
+            "id": "64ca073f4a6c64446b94d793",
+            "createdAt": "2023-08-02T07:35:27.097Z",
+            "updatedAt": "2023-08-02T07:35:27.097Z",
+            "createTxSig": "5ReQfyc9A5f4QqJgzAuQdmkJz6AsTiyzJHgXB2DYAULax77iiaXd3bbY28yiEaUXQZD5gsBwUEsmTLBeaxsB42B6",
+            "nonceValue": "9FUmzarD9nnJKiDpCXieat6JxrioQwqaL5QwutVpbpp1",
+            "publicKey": "FLrJXvMrCoeQ3rHJ4qtRprHSPhBXFL6t1fzp9Q9aK2NE",
+            "privateKey": "5JG7HCaKhws8NU59MzkRGYRrj2tFYNmSq2jUpGS8kuMnzV8CC9aFBUKo3WLrGwdWxxz6m21WMHE4MwPzrbUdKdaS",
+            "deleteTxSig": null,
+            "isActive": true,
+            "isDeleted": false
+        }
+    }
+}
+```
+</ResponseExample>
